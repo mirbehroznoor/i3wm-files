@@ -1,3 +1,5 @@
+*Wherever possible, I had provided reference/links to other's works. Some scripts are partly or completely my own work. However, without Stackoverflow, Archlinux, Google and DuckDuckGo, I would not have been able to work on my i3-config, Emacs and Ubuntu.*
+
 ** Installations
 
 #+begin_src bash
@@ -112,14 +114,15 @@ fi
 #+end_src
 
 ** i3 Scripts
-*** Keys Setup
+*** Keys Setup [[https://github.com/mirbehroznoor/i3wm-files/tree/main/i3/i3scripts/keys.sh][i3script]]
 - Swap ~Capslock~ with ~Control~
 - Windows Key as ~Left Super~
 - ~Right Alt~ to ~Right Super~
 - ~Right Control~ to ~Escape~ /It acts both as control and Escape/
 - Turn on all Num Keys
 - *xmodmap* has to be installed
-[[https://github.com/mirbehroznoor/i3wm-files/tree/main/i3scripts/keys.sh][i3 keys script]]
 
-*** i3-lock
-[[https://github.com/mirbehroznoor/i3wm-files/blob/main/i3scripts/lock.sh][i3lock and scrot]]
+*** Many More [[https://github.com/mirbehroznoor/i3wm-files/tree/main/i3/i3scripts][i3scripts]]
+
+*** i3status [[https://github.com/mirbehroznoor/i3wm-files/blob/main/i3status/config][config]]
+For those who use the lightweight i3status, please take note the ~/i3/values~ folder acts as the config file and store the values for i3status to read. For example: brightness value is sent to ~/values/brightness/~ and from there, i3status reads the value for the bar. *I have configured it to the extent that I do not feel like using i3blocks anymore ;)*
