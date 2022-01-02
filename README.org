@@ -124,5 +124,9 @@ fi
 
 *** Many More [[https://github.com/mirbehroznoor/i3wm-files/tree/main/i3/i3scripts][i3scripts]]
 
-*** i3status [[https://github.com/mirbehroznoor/i3wm-files/blob/main/i3status/config][config]]
-For those who use the lightweight i3status, please take note the ~/i3/values~ folder acts as the config file and store the values for i3status to read. For example: brightness value is sent to ~/values/brightness/~ and from there, i3status reads the value for the bar. *I have configured it to the extent that I do not feel like using i3blocks anymore ;)*
+*** i3status [[https://github.com/mirbehroznoor/i3wm-files/blob/main/i3status/config][Config]]
+For those who use the lightweight i3status, please take note the ~/i3/values~ folder acts as the ~config~ file and store the values for i3status to read. For example: brightness value is sent to the file ~/values/brightness~ and from there, i3status reads the value for the bar.
+
+*I have configured it to the extent that I do not feel like using i3blocks anymore ;)*
+
+My special thanks to [[https://medium.com/hacker-toolbelt/my-i3status-customization-3e8ad6f0153a][Miguel Sampaio da Veiga's i3status Customization]] for the brilliant insight or idea for the modification and customization, also whoever else working on the *i3status*. Thank you!
