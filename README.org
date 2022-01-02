@@ -1,0 +1,110 @@
+** Installations
+
+#+begin_src bash
+sudo apt update
+sudo apt install -y i3 ruby rofi nautilus-dropbox git
+#+end_src
+
+**** Setup Git and Github
+[[https://kbroman.org/github_tutorial/pages/first_time.html][Git and Github Tutorial]]
+
+** Emacs
+[[https://launchpad.net/~ubuntu-elisp/+archive/ubuntu/ppa][Latest Emacs Repository]]
+
+#+begin_src bash
+sudo add-apt-repository ppa:ubuntu-elisp/ppa
+sudo apt-get update
+sudo apt install -y emacs-snapshot
+#+end_src
+
+** Xorg Configuration Files
+Create a folder "xorg.conf.d/"
+Put the files in /etc/X11/xorg.conf.d/
+~20-intel.conf~
+~90-touchpad.conf~
+
+*** Backlight
+~/xorg.conf.d/20-intel.conf~ and add the following lines
+#+begin_src conf
+Section "Device"
+    Identifier  "Intel Graphics"
+    Driver      "intel"
+    Option      "Backlight"  "intel_backlight"
+EndSection
+#+end_src
+*** Touchpad
+~/xorg.conf.d/90-touchpad.conf~ and add the following lines. Depending on the case, choose one or try both.
+#+begin_src
+Section "InputClass"
+        Identifier "touchpad Thinkpad"
+        MatchIsTouchpad "on"
+        Driver "libinput"
+        Option "Tapping" "on"
+        Option "TappingButtonMap" "lmr"
+        Option "NaturalScrolling" "on"
+        Option "ScrollMethod" "twofinger"
+EndSection
+#+end_src
+
+#+begin_src
+Section "InputClass"
+        Identifier "libinput touchpad catchall"
+        MatchIsTouchpad "on"
+        MatchDevicePath "/dev/input/event*"
+        Driver "libinput"
+        Option "Tapping" "on"
+EndSection
+#+end_src
+
+*Tutorial* [[https://major.io/2021/07/18/tray-icons-in-i3/][Enable touchpad tap to click in i3]]
+
+** Shell Message on Startup
+Put the lines in your ~.bashrc~ file
+
+#+begin_src bash
+# echo's message at the startup of terminal
+if [[ ! -f $XDG_RUNTIME_DIR/has-session ]]; then
+
+red=$(tput setaf 1)
+blue=$(tput setaf 4)
+green=$(tput setaf 2)
+bold=$(tput bold)
+end=$(tput sgr0)
+
+while :;
+do
+
+read -r -p "${blue}${bold}Hey $USER :)${end}
+${green}Please Select an Option for your System Updates:${end}
+${bold}Update & Upgrade [${bold}${red}both${end}]
+${bold}Skip[${red}skip${end}]
+${blue}${bold}Input${end}: " option
+
+# ${bold}Update[${red}update${end}]
+# ${bold}Upgrade[${red}upgrade${end}]
+
+case $option in
+    update)
+        sudo apt-get -y update
+        break
+        ;;
+    upgrade)
+        sudo apt-get -y upgrade
+        break
+        ;;
+    both)
+        sudo apt-get -y update
+        sudo apt-get -y upgrade
+        break
+        ;;
+    skip)
+        echo "Skipped"
+        break
+        ;;
+    ,*) echo "Wrong Input" ;;
+esac
+done
+
+: > "$XDG_RUNTIME_DIR/has-session"
+fi
+#+end_src
