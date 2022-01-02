@@ -24,7 +24,7 @@ Put the files in ~/etc/X11/xorg.conf.d/~
 2. ~90-touchpad.conf~
 
 *** Backlight
-~/xorg.conf.d/20-intel.conf~ and add the following lines
+~/xorg.conf.d/20-intel.conf~ add the following lines
 #+begin_src conf
 Section "Device"
     Identifier  "Intel Graphics"
@@ -33,7 +33,7 @@ Section "Device"
 EndSection
 #+end_src
 *** Touchpad
-~/xorg.conf.d/90-touchpad.conf~ and add the following lines. Depending on the case, choose one or try both. Also you check out the *tutorial*: [[https://major.io/2021/07/18/tray-icons-in-i3/][Enable touchpad tap to click in i3]]
+~/xorg.conf.d/90-touchpad.conf~ add the following lines. Depending on the case, choose one or try both. Also you check out the *tutorial*: [[https://major.io/2021/07/18/tray-icons-in-i3/][Enable touchpad tap to click in i3]]
 
 #+begin_src
 Section "InputClass"
