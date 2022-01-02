@@ -1,21 +1,23 @@
 ** Installations
 
-#+begin_src shell
+#+begin_src bash
 sudo apt update
-sudo apt install -y i3 ruby rofi nautilus-dropbox git
+sudo apt install -y i3 ruby rofi jq xbacklight nautilus-dropbox git
 #+end_src
 
 **** Setup Git and Github
 [[https://kbroman.org/github_tutorial/pages/first_time.html][Git and Github Tutorial]]
 
 ** Emacs
+
 [[https://launchpad.net/~ubuntu-elisp/+archive/ubuntu/ppa][Latest Emacs Repository]]
 
-#+begin_src shell
+#+begin_src bash
 sudo add-apt-repository ppa:ubuntu-elisp/ppa
 sudo apt-get update
-sudo apt install -y emacs-snapshot
+sudo apt install -y emacs-snapshot ripgrep
 #+end_src
+
 
 ** Xorg Configuration Files
 Create a folder ~xorg.conf.d/~
@@ -108,3 +110,16 @@ done
 : > "$XDG_RUNTIME_DIR/has-session"
 fi
 #+end_src
+
+** i3 Scripts
+*** Keys Setup
+- Swap ~Capslock~ with ~Control~
+- Windows Key as ~Left Super~
+- ~Right Alt~ to ~Right Super~
+- ~Right Control~ to ~Escape~ /It acts both as control and Escape/
+- Turn on all Num Keys
+- *xmodmap* has to be installed
+[[https://github.com/mirbehroznoor/i3wm-files/tree/main/i3scripts/keys.sh][i3 keys script]]
+
+*** i3-lock
+[[https://github.com/mirbehroznoor/i3wm-files/blob/main/i3scripts/lock.sh][i3lock and scrot]]

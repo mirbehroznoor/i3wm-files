@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# Manage Workspace display with rofi
+# A great Help from https://faq.i3wm.org/question/6200/obtain-info-on-current-workspace-etc.1.html
+
+currentws=$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).name' | cut -d"\"" -f2)
+
+ws=$(printf "▲▲▲ ]\n▼▼▼ [\n? +" | rofi -sep "\n" -mesg "<b> Move Container from Workspace *$currentws* </b>" -auto-select -dmenu -b -lines 3 -width 100 -theme dmenu_rofi)
+
+if [ "$ws" = "▼▼▼ [" ] ; then
+    l_num=$currentws
+    if [ "$l_num" -eq 1 ] ; then
+        exit
+    elif [ "$l_num" -gt 1 ] ; then
+        l_ws=$((l_num-1))
+        i3-msg move container to workspace "$l_ws", workspace "$l_ws"
+    fi
+fi
+if [ "$ws" = "▲▲▲ ]" ] ; then
+    r_num=$currentws
+    r_ws=$((r_num+1))
+    i3-msg move container to workspace "$r_ws", workspace "$r_ws"
+    fi
+if [ "$ws" = "? +" ] ; then
+    ws=$(rofi -mesg " <b> Current Workspace Number *$currentws* </b> " -font 'ubuntu 15' -dmenu -b -p "To Which Workspace " -l 2 -width 100)
+    i3-msg move container to workspace "$ws", workspace "$ws"
+fi

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Opens Up Rofi Box for options
+# ws=$(rofi -auto-select -mesg "<b>Type Workspace Number</b> then Press <b> Enter </b>" -font 'ubuntu 12' -width 30 -lines 0 -dmenu -p "Jump to:  ")
+
+currentws=$(i3-msg -t get_workspaces | jq '.[] | select(.focused==true).name' | cut -d"\"" -f2)
+
+ws=$(rofi -dmenu -l 0 -p "Jump to " -mesg " Current Workspace Number <b> *$currentws* </b> ")
+
+i3 workspace "$ws"

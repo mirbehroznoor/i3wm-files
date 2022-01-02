@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+# Manage logout with rofi
+# By jmutai@computingforgeeks.com
+
+option=$(printf "Lock\nReboot\nQuit i3" | rofi -sep '\n' -auto-select -mesg "<b> Reboot Options </b>" -location 3 -width 100 -lines 1 -columns 6 -font "Iosevka Term 13" -dmenu -i -theme-str 'inputbar {enabled: false;} message{background-color: #ee0500; border-color: #ee0500;} listview{spacing: 20 20 20 20; padding: 250 0 0 50;} window {height: 100%; border: 15;}')
+
+# Case switch
+
+img=/tmp/i3lock.png
+scrot $img
+convert $img -scale 10% -scale 1000% $img
+
+# name=$(whoami)
+
+case $option in
+    Sleep)
+        i3lock -i $img  && systemctl suspend
+        rm $img
+        ;;
+    Lock)
+        i3lock -i $img
+        rm $img
+        ;;
+    "Quit i3")
+        i3-msg exit
+        # rm $img
+        ;;
+    Reboot)
+        systemctl reboot
+        ;;
+    Poweroff)
+        systemctl poweroff
+        ;;
+
+esac

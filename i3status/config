@@ -1,0 +1,101 @@
+general {
+        # output_format = "i3bar"
+        colors = false
+        markup = pango
+        interval = 5
+        color_good = '#2f343f'
+        color_degraded = '#ebcb8b'
+        color_bad = '#ba5e57'
+}
+
+order += "read_file layout"
+# order += "read_file mocp"
+order += "read_file screen"
+order += "read_file night_mode"
+order += "load"
+# order += "cpu_usage"
+order += "cpu_temperature 0"
+order += "memory"
+order += "disk /"
+order += "disk /home"
+order += "ethernet _first_"
+order += "wireless _first_"
+# order += "battery all"
+order += "read_file BRIGHTNESS"
+order += "volume master"
+order += "tztime local"
+
+read_file mocp{
+format = "<span foreground='#ffffff'>%content</span>"
+path="./.cache/ytfzf/ytfzf_cur"
+}
+cpu_usage{
+format = ""
+format_above_threshold = "<span background='#ff0000'> CPU %usage {%cpu0 %cpu1} </span>"
+max_threshold = 75
+}load {
+      format = ""
+      max_threshold = "2,5"
+      format_above_threshold = "<span background='#ff0000'> Load: %5min‣%15min </span>"
+}cpu_temperature 0 {
+        format =""
+        path = "/sys/class/thermal/thermal_zone0/temp"
+        max_threshold = 65
+        format_above_threshold = "<span background='#ff0000'> %degrees°C </span>"
+}memory {
+        format = "Ram %used"
+        threshold_degraded = "20%"
+        threshold_critical = "15%"
+        format_degraded = "<span background='#ff0000'> Memory low: %free/%total </span>"
+    # memory_used_method = classical
+    # format = "Mem: %used" // Or whatever you want. Read the man
+}disk "/" {
+        low_threshold = 5
+        format_below_threshold = "<span background='#ff0000'> root disk: %free </span>"
+        format = "<span foreground='#ffffff'>Root: %avail</span>"
+        threshold_type = "percentage_free"
+}disk "/home" {
+        format = "<span background='#ffffff'> %avail </span>"
+}ethernet _first_ {
+        format_up = "<span background = '#00ee00' foreground='#ffffff'></span><span background='#00ee00'> %ip ~ %speed </span>"
+        format_down = "<span background='#ff0000'> 🔌 </span>"
+}wireless _first_ {
+          # format_quality = "%d%s"
+        format_up = "<span background = '#00ee00' foreground='#ffffff'></span><span background='#00ee00'> %essid ~ %bitrate </span>"
+        format_down = "<span background='#ff0000'> 📡 </span><span background='#e5e9f0'></span>"
+}volume master {
+        format = "<span background='#ffffff'> 🔊 %volume </span>"
+        format_muted = "<span background='#ffffff'> 🎜 Muted </span>"
+        device = "default"
+        mixer = "Master"
+        mixer_idx = 0
+}read_file BRIGHTNESS {
+           format ="<span background='#ffffff'> 🔅 %content% </span>"
+           path = "./.config/i3/i3scripts/values/brightness"
+           max_characters = 3
+}read_file night_mode {
+           format ="<span background='#98f5ff' foreground='#000000'>%content</span>"
+           path = "./.config/i3/i3scripts/values/night_mode"
+           # max_characters = 3
+}read_file screen {
+           format ="<span background='#54ff9f'>%content</span>"
+           path = "./.config/i3/i3scripts/values/screen"
+           # max_characters = 3
+}read_file layout {
+           format ="<span background='#ffffff'>%content</span>"
+           path = "./.config/i3/i3scripts/values/layout"
+           # max_characters = 3
+}battery all {
+     last_full_capacity = true
+        format = "<span background='#a3be8c'> ⚡ </span><span background='#e5e9f0'>%percentage [%status] </span>"
+        format_down = "No Battery"
+        status_chr = " Charging "
+        status_bat = ""
+        status_unk = " Unknown "
+        status_full = " Charged "
+        path = "/sys/class/power_supply/BAT%d/uevent"
+        low_threshold = 10
+}tztime local {
+ format = "<span background='#ffffff'> %time </span>"
+ format_time = " %a %-d %b ⏳ %I:%M %p"
+}
