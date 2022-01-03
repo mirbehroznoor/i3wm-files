@@ -130,3 +130,6 @@ For those who use the lightweight i3status, please take note the ~/i3/values~ fo
 *I have configured it to the extent that I do not feel like using i3blocks anymore ;)*
 
 My special thanks to [[https://medium.com/hacker-toolbelt/my-i3status-customization-3e8ad6f0153a][Miguel Sampaio da Veiga's i3status Customization]] for the brilliant insight or idea for the modification and customization, also whoever else working on the *i3status*. Thank you!
+
+** Rofi [[https://github.com/mirbehroznoor/i3wm-files/tree/main/rofi-themes][Custom + Official Themes]]
+There are multiple themes that I customized to my own suitability and i3 appearance. However, I believe the scripts will work with any official Rofi theme ;)
