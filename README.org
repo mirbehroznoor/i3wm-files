@@ -133,4 +133,5 @@ My special thanks to [[https://medium.com/hacker-toolbelt/my-i3status-customizat
 
 ** Rofi [[https://github.com/mirbehroznoor/i3wm-files/tree/main/rofi-themes][Custom + Official Themes]]
 There are multiple themes that I customized to my own suitability and i3 appearance. However, I believe the scripts will work with any official Rofi theme ;)
-- I can try to add some screenshots...
+**** TODO I can try to add some screenshots...
+SCHEDULED: <2022-03-01 Di>
