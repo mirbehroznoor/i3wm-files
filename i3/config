@@ -23,9 +23,11 @@ set $refresh_i3status killall -USR1 i3status
 
 bindsym Shift+Scroll_Lock exec bash $i3sc/keyboard_layout.sh
 exec_always --no-startup-id bash $i3sc/keys.sh
+
+# Screen Settings
+# exec --no-startup-id "xrandr --output VGA1 --auto --left-of LVDS1"
+bindsym $rs+m exec sh $i3sc/external_monitor.sh && $refresh_i3status
 exec_always --no-startup-id bash $i3sc/custom_resolutions.sh
-exec_always --no-startup-id xsetroot -solid "#002244"
-# exec_always --no-startup-id xsetroot -solid "#7a378b"
 
 # Brigthness Control Keys
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10 && xbacklight > $i3sc/values/brightness && $refresh_i3status # increase screen brightness
@@ -369,10 +371,6 @@ bindsym $win+Ctrl+q exec bash $i3sc/rofi_prog_container_file.sh
 bindsym $win+Shift+Delete exec sh $i3sc/rofi_logout
 bindsym $alt+Ctrl+Delete exec i3-msg exit
 
-# Screen Settings
-exec --no-startup-id "xrandr --output VGA1 --auto --left-of LVDS1"
-bindsym $rs+m exec sh $i3sc/external_monitor.sh && $refresh_i3status
-
 # Move the active Workspace: back and forth from laptop to external
 # bindsym $alt+Tab exec sh $i3sc/rofi_which_display
 bindsym $alt+Tab move workspace to output left
@@ -404,3 +402,12 @@ bindsym Print exec --no-startup-id sh $i3sc/night_mode.sh && $refresh_i3status
 exec_always ruby $i3sc/leo_search_rofi/leo_search.rb
 bindsym $rs+0 exec bash $i3sc/leo_search_rofi/leo_search_rofi.sh
 bindsym $rs+9 exec bash $i3sc/leo_search_rofi/trans_shell_rofi.sh
+
+# Set Wallpaper with feh/Background with xsetroot
+#feh --bg-fill/--bg-scale
+exec_always --no-startup-id feh --bg-fill ~/Pictures/wall_gork.jpg
+# exec_always --no-startup-id xsetroot -solid "#002244"
+# exec_always --no-startup-id xsetroot -solid "#7a378b"
+
+# nautilus-dropbox on startup
+exec_always --no-startup-id "dropbox start"

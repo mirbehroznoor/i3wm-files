@@ -4,11 +4,23 @@
 
 #+begin_src bash
 sudo apt update
-sudo apt install -y i3 ruby rofi jq xbacklight nautilus-dropbox git
+sudo apt install -y i3 ruby rofi jq xbacklight nautilus-dropbox git texlive-full
+#+end_src
+
+**** Xclutter - Hide Cursor after inactivity
+#+begin_src bash
+sudo apt install make gcc unclutter
 #+end_src
 
 **** Setup Git and Github
 [[https://kbroman.org/github_tutorial/pages/first_time.html][Git and Github Tutorial]]
+
+**** Detect HDD/SSD:
+I used for caddy drive on Ubuntu. You can follow the [[https://askubuntu.com/questions/1054612/how-to-reset-and-detect-plug-in-hdd-ssd-via-ide-or-sata-without-rebooting#1058520][reset and detect plug hdd/ssd without reboot]] for detailed instructions, the basic solution is:
+#+begin_src bash
+sudo apt-get install -y scsitools
+sudo rescan-scsi-bus
+#+end_src
 
 ** Emacs
 
@@ -105,7 +117,8 @@ case $option in
         echo "Skipped"
         break
         ;;
-    ,*) echo "Wrong Input" ;;
+    *) echo "Wrong Input"
+       ;;
 esac
 done
 
@@ -133,5 +146,4 @@ My special thanks to [[https://medium.com/hacker-toolbelt/my-i3status-customizat
 
 ** Rofi [[https://github.com/mirbehroznoor/i3wm-files/tree/main/rofi-themes][Custom + Official Themes]]
 There are multiple themes that I customized to my own suitability and i3 appearance. However, I believe the scripts will work with any official Rofi theme ;)
-**** TODO I can try to add some screenshots...
-SCHEDULED: <2022-03-01 Di>
+**** I can try to add some screenshots

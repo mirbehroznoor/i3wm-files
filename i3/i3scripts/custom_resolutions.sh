@@ -35,7 +35,13 @@ xrandr --addmode LVDS1 "1680x768_60.00"
 primary=$(xrandr | grep \ connected | grep \ primary | cut -d\  -f1)
 monitor=$(xrandr | grep \ connected | awk 'NR > 1 {print $1}')
 
-if [ "$monitor" != "" ]; then
+if [ "$monitor" != "" ]
+then
     xrandr --output "$monitor" --mode 1984x1000_60.00
     xrandr --output "$monitor" --mode 1984x1000_60.00 --output "$primary" --off
+    # echo "$monitor"
+else
+    xrandr --output "$primary" --mode 1366x768
+    xrandr --output "$primary" --primary --auto --output "$monitor" --right-of "$primary" --auto
+    # echo "$primary"
 fi
