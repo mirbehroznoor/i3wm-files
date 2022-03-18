@@ -4,7 +4,7 @@
 
 #+begin_src bash
 sudo apt update
-sudo apt install -y i3 ruby rofi jq xbacklight nautilus-dropbox git texlive-full
+sudo apt install -y i3 ruby rofi jq xbacklight nautilus-dropbox git texlive-full translate-shell notify-send
 #+end_src
 
 **** Xclutter - Hide Cursor after inactivity

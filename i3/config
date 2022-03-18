@@ -9,8 +9,11 @@
 #
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
 
+# Window key
 set $win Mod4
+# Left Alt
 set $alt Mod1
+# Right Alt
 set $rs Mod3
 
 # Set Path
@@ -22,7 +25,7 @@ set $refresh_i3status killall -USR1 i3status
 # set $refresh_i3status killall -USR1 py3status
 
 bindsym Shift+Scroll_Lock exec bash $i3sc/keyboard_layout.sh
-exec_always --no-startup-id bash $i3sc/keys.sh
+exec_always bash $i3sc/keys.sh
 
 # Screen Settings
 # exec --no-startup-id "xrandr --output VGA1 --auto --left-of LVDS1"
@@ -60,7 +63,7 @@ bindsym $rs+F9 exec mocp --toggle-pause
 bindsym $rs+F12 exec mocp --next
 bindsym $rs+F11 exec mocp --previous
 bindsym $rs+F10 exec mocp --toggle repeat
-bindsym Insert exec st -e 'mocp'
+bindsym $alt+Insert exec terminator -e 'mocp'
 bindsym End exec mocp --seek +15
 bindsym Home exec mocp --seek -15
 
@@ -88,8 +91,11 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # Take a screenshot upon pressing $win+x (select an area)
 # bindsym --release Shift+Print exec --no-startup-id scrot -u '%Y-%m-%d_%H%M%S.png' -e 'mv $f ~/Pictures/screenshots/ && gimp ~/Pictures/screenshots/$f' && notify-send -t 3000 ' Screenshot to ~/Pictures/Screenshot'
+# exec scrot $HOME/Images/`date +%Y-%m-%d_%H:%M:%S`.png
 
-bindsym --release Shift+Print exec --no-startup-id "gnome-screenshot -s -p 0 -c 0.96,0.5,0.09 $(date +%Y-%m-%d_%H-%M-%S).png"
+# https://unix.stackexchange.com/questions/497897/print-screen-key-in-i3#497898
+# bindsym --release Shift+Print exec --no-startup-id gnome-screenshot -a -f $HOME/Pictures/screenshots/`date +%Y-%m-%d_%H:%M:%S`.png && notify-send -t 3000 ' Screenshot => ~/Pictures'
+bindsym --release Shift+Print exec --no-startup-id flameshot gui -p $HOME/Pictures/screenshots
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -225,8 +231,26 @@ mode "resize" {
         bindsym Escape mode "default"
         bindsym $win+r mode "default"
 }
-
 bindsym $win+r mode "resize"
+
+# shutdown / restart / suspend...
+set $mode_system Lock (l), Logout (e), Sleep+Lock (s), Hibernate (h), Reboot (r), Shutdown (Ctrl+s)
+set $i3lock bash $i3sc/lock.sh
+
+mode "$mode_system" {
+    bindsym l exec --no-startup-id $i3lock, mode "default"
+    bindsym e exec --no-startup-id i3-msg exit, mode "default"
+    bindsym s exec --no-startup-id $i3lock && systemctl suspend, mode "default"
+    bindsym h exec --no-startup-id $i3lock && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym Ctrl+s exec --no-startup-id systemctl poweroff -i, mode "default"
+
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $win+Escape mode "$mode_system"
+
 
 set $base00 #2b303b
 set $base01 #343d46
@@ -258,8 +282,7 @@ set $green #00ff00
 bar {
     position top
     font pango:KacstBook bold 9px
-    status_command i3status
-
+    status_command i3status -c ~/.config/i3/i3status/config
     colors {
     background  #002b36
     statusline #000000
@@ -335,7 +358,7 @@ for_window [title="(Open File|File Upload|Save As)"] fullscreen enable
 # for_window [class="zoom"] floating enable
 # for_window [class="Org.gnome.Nautilus"] border none
 
-assign [class="firefox"] → 1
+assign [class="Firefox"] → 1
 # for_window [class="firefox"] border none
 assign [class="Emacs"] → 2
 for_window [title="JupyterLab"] floating disable move container to workspace $ws3
@@ -404,10 +427,20 @@ bindsym $rs+0 exec bash $i3sc/leo_search_rofi/leo_search_rofi.sh
 bindsym $rs+9 exec bash $i3sc/leo_search_rofi/trans_shell_rofi.sh
 
 # Set Wallpaper with feh/Background with xsetroot
+exec_always --no-startup-id bash $i3sc/auto-change-wallpaper.sh && $refresh_i3status
 #feh --bg-fill/--bg-scale
-exec_always --no-startup-id feh --bg-fill ~/Pictures/wall_gork.jpg
+# exec_always --no-startup-id feh --bg-center ~/Pictures/wall_gork.jpg
+# exec_always --no-startup-id xsetroot -solid "deep sky blue"
+# exec_always --no-startup-id xsetroot -solid "lemon chiffon"
+# exec_always --no-startup-id xsetroot -solid "royalblue2"
+# exec_always --no-startup-id xsetroot -solid "black"
+# exec_always --no-startup-id xsetroot -solid "maroon2"
+# exec_always --no-startup-id xsetroot -solid "lavender blush"
+# exec_always --no-startup-id xsetroot -solid "cornsilk"
+# exec_always --no-startup-id xsetroot -solid "deep pink"
 # exec_always --no-startup-id xsetroot -solid "#002244"
 # exec_always --no-startup-id xsetroot -solid "#7a378b"
 
 # nautilus-dropbox on startup
 exec_always --no-startup-id "dropbox start"
+exec_always --no-startup-id "yandex-disk start"

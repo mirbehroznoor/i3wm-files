@@ -10,7 +10,7 @@ general {
 
 order += "read_file layout"
 # order += "read_file mocp"
-order += "read_file screen"
+# order += "read_file screen"
 order += "read_file night_mode"
 order += "load"
 # order += "cpu_usage"
@@ -25,10 +25,6 @@ order += "read_file BRIGHTNESS"
 order += "volume master"
 order += "tztime local"
 
-read_file mocp{
-format = "<span foreground='#ffffff'>%content</span>"
-path="./.cache/ytfzf/ytfzf_cur"
-}
 cpu_usage{
 format = ""
 format_above_threshold = "<span background='#ff0000'> CPU %usage {%cpu0 %cpu1} </span>"
@@ -58,7 +54,7 @@ max_threshold = 75
         format = "<span background='#ffffff'> %avail </span>"
 }ethernet _first_ {
         format_up = "<span background = '#00ee00' foreground='#ffffff'></span><span background='#00ee00'> %ip ~ %speed </span>"
-        format_down = "<span background='#ff0000'> 🔌 </span>"
+        format_down = "<span background='#ff0000'> 🖧 </span>"
 }wireless _first_ {
           # format_quality = "%d%s"
         format_up = "<span background = '#00ee00' foreground='#ffffff'></span><span background='#00ee00'> %essid ~ %bitrate </span>"
@@ -69,11 +65,20 @@ max_threshold = 75
         device = "default"
         mixer = "Master"
         mixer_idx = 0
-}read_file BRIGHTNESS {
+}
+
+read_file BRIGHTNESS {
            format ="<span background='#ffffff'> 🔅 %content% </span>"
            path = "./.config/i3/i3scripts/values/brightness"
            max_characters = 3
-}read_file night_mode {
+}
+
+# read_file mocp{
+# format = "<span foreground='#ffffff'>%content</span>"
+# path="./.config/i3/i3scripts/values/screen"
+# }
+
+read_file night_mode {
            format ="<span background='#98f5ff' foreground='#000000'>%content</span>"
            path = "./.config/i3/i3scripts/values/night_mode"
            # max_characters = 3

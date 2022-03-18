@@ -6,7 +6,7 @@ xmodmap -e "keysym Control_R control = Escape Control_R" \
         -e "remove mod1 = Alt_R" \
         -e "remove mod4 = Super_R" \
         -e "keysym Alt_R = Super_R" \
-        -e "add mod3 = Super_R" 
+        -e "add mod3 = Super_R"
 
 # https://superuser.com/questions/834568/disable-numlock-preserving-mouse-button-key-bindings
 # Use numbers even when numlock is off

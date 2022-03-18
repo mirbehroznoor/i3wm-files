@@ -7,6 +7,8 @@ path="$(dirname $(realpath $0))/values/night_mode"
 
 mode=$(cat $path)
 # echo $mode
+# mode=$(sed -rn 's/display-port=([^\n]+)$/\1/p' $path)
+
 
 if [ "$mode" = " Night Mode 3 " ] ; then
     i=0
@@ -21,25 +23,25 @@ fi
 for output in $(xrandr --prop | grep \ connected | cut -d\  -f1); do
     case $i in
         "1")
-            GAMMA="2:1.2:1 --brightness 0.93"
-            xrandr --output $output --gamma $GAMMA
-            echo " Night Mode 1 " > $path
-            ;;
+	    GAMMA="2:1.2:1 --brightness 0.93"
+	    xrandr --output $output --gamma $GAMMA
+	    echo " Night Mode 1 " > $path
+	    ;;
         "2")
-            GAMMA="0.9:0.5:2 --brightness 0.93"
-            xrandr --output $output --gamma $GAMMA
-            echo " Night Mode 2 " > $path
-            ;;
+	    GAMMA="0.9:0.5:2 --brightness 0.93"
+	    xrandr --output $output --gamma $GAMMA
+	    echo " Night Mode 2 " > $path
+	    ;;
         "3")
-            GAMMA="0.60:0.75:0.8 --brightness 0.93"
-            xrandr --output $output --gamma $GAMMA
-            echo " Night Mode 3 " > $path
-            ;;
+	    GAMMA="0.60:0.75:0.8 --brightness 0.93"
+	    xrandr --output $output --gamma $GAMMA
+	    echo " Night Mode 3 " > $path
+	    ;;
         "0")
-            echo "" > $path
-            GAMMA="1:1:1 --brightness 1.0"
-            xrandr --output $output --gamma $GAMMA
-            ;;
+	    echo "" > $path
+	    GAMMA="1:1:1 --brightness 1.0"
+	    xrandr --output $output --gamma $GAMMA
+	    ;;
     esac
     exit
     # xrandr --output $output --gamma $GAMMA

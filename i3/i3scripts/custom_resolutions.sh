@@ -32,16 +32,66 @@ xrandr --newmode "1680x768_60.00"  104.75  1680 1768 1936 2192  768 771 781 798 
 xrandr --addmode HDMI1 "1680x768_60.00"
 xrandr --addmode LVDS1 "1680x768_60.00"
 
+file="$(dirname $(realpath $0))/values/i3scripts.conf"
 primary=$(xrandr | grep \ connected | grep \ primary | cut -d\  -f1)
 monitor=$(xrandr | grep \ connected | awk 'NR > 1 {print $1}')
 
-if [ "$monitor" != "" ]
+filesize=$(cat $file | wc -l)
+# notify-send "$(cat $file)"
+
+if [ -e $file ]
 then
-    xrandr --output "$monitor" --mode 1984x1000_60.00
-    xrandr --output "$monitor" --mode 1984x1000_60.00 --output "$primary" --off
-    # echo "$monitor"
+    if [ -s $file ] # -s file isnot zero size
+    then
+	# notify-send "Good" -u critical -t 2000
+        # if [ "$filesize" -ge 0 ]
+        # then
+            # truncate -s 0 "$file"
+	# echo "$(cat <<EOM
+	# { "display" : {
+	# "display": null,
+	# "side": null,
+	# "port": null
+	# } }
+	# EOM
+	# )" > $file
+        # printf "{"Display": {"display": null,"port":null, "side": null}"}"" >> $file
+        # cat $file
+        # fi
+	notify-send "$(cat $file | jq -r '.[]')"
+    else
+	echo '$(cat<<EOM
+	{ "display" : {
+	"display": null,
+	"side": null,
+	"port": null}}
+	EOM
+	)' > $file
+        # printf "display-port=\ndisplay-side=\ndisplay=\n" >> $file
+        # cat $file
+    fi
 else
-    xrandr --output "$primary" --mode 1366x768
-    xrandr --output "$primary" --primary --auto --output "$monitor" --right-of "$primary" --auto
+    notify-send "Display Config file or folder missing!" -u critical
+fi
+
+if [ -n "$monitor" ]
+then
+    # sed -i'' -r "s/^display-port=.*/display-port=$monitor/" $file
+    cat $file | jq -r '.display.port = $v' --arg v "${monitor}" | sponge $file
+    # Turn off primary display if monitor connected
+    # xrandr --output "$monitor" --mode 1984x1000_60.00
+    # xrandr --output "$monitor" --mode 1984x1000_60.00 --output "$primary" --off
+    # Donot turn off primary display if monitor connected
+    xrandr --output "$primary" --primary --auto --output "$monitor"
+    xrandr --output "$monitor" --mode 1984x1000_60.00 --left-of "$primary"
+
+else
+    # monitor=$(sed -rn "s/display-port=([^\n]+)$/\1/p" $file)
+    # xrandr --output "$primary" --mode 1366x768
+    monitor=$(jq -r '.display.port' $file)
+    xrandr --output "$monitor" --off --output "$primary" --mode 1366x768
     # echo "$primary"
 fi
+
+# xrandr --output "$primary" --primary --auto --output "$monitor"
+# xrandr --output "$monitor" --mode 1984x1000_60.00 --left-of "$primary"
